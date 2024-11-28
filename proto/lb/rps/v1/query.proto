@@ -1,0 +1,43 @@
+syntax = "proto3";
+package lb.rps.v1;
+
+option go_package = "github.com/0xlb/rpschain/x/rps/types";
+
+import "google/api/annotations.proto";
+import "cosmos/query/v1/query.proto";
+import "lb/rps/v1/rps.proto";
+
+// Msg defines the module Msg service.
+service Query {
+  // GetGame
+  rpc GetGame(QueryGetGameRequest) returns (QueryGetGameResponse) {
+    option (cosmos.query.v1.module_query_safe) = true;
+    option (google.api.http).get = "/rps/v1/game/{index}";
+  };
+  // GetParams
+  rpc GetParams(QueryGetParamsRequest) returns (QueryGetParamsResponse) {
+    option (cosmos.query.v1.module_query_safe) = true;
+    option (google.api.http).get = "/rps/v1/params";
+  };
+}
+
+// QueryGetGameRequest
+message QueryGetGameRequest {
+  // index
+  uint64 index = 1;
+}
+
+// QueryGetGameResponse
+message QueryGetGameResponse {
+  // Game
+  Game game = 1;
+}
+
+// QueryGetParamsRequest
+message QueryGetParamsRequest {}
+
+// QueryGetParamsResponse
+message QueryGetParamsResponse {
+  // Params
+  Params param = 1;
+}
