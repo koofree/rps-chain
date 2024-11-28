@@ -3,7 +3,7 @@ package keeper
 import (
 	"context"
 
-	"github.com/0xlb/rps-chain/x/rps/types"
+	"github.com/0xlb/rpschain/x/rps/types"
 )
 
 // InitGenesis initializes the module state from a genesis state.
