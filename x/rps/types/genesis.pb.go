@@ -28,7 +28,7 @@ type GenesisState struct {
 	// params defines all the parameters for the rps module
 	Params Params `protobuf:"bytes,1,opt,name=params,proto3" json:"params"`
 	// games are the stored games in the module
-	Games []*Game `protobuf:"bytes,2,rep,name=games,proto3" json:"games,omitempty"`
+	Games []Game `protobuf:"bytes,2,rep,name=games,proto3" json:"games,omitempty"`
 }
 
 func (m *GenesisState) Reset()         { *m = GenesisState{} }
@@ -71,7 +71,7 @@ func (m *GenesisState) GetParams() Params {
 	return Params{}
 }
 
-func (m *GenesisState) GetGames() []*Game {
+func (m *GenesisState) GetGames() []Game {
 	if m != nil {
 		return m.Games
 	}
@@ -274,7 +274,7 @@ func (m *GenesisState) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Games = append(m.Games, &Game{})
+			m.Games = append(m.Games, Game{})
 			if err := m.Games[len(m.Games)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
