@@ -11,4 +11,8 @@ var (
 	ErrInvalidScore       = errors.Register(ModuleName, 6, "invalid score")
 	ErrInvalidOpponent    = errors.Register(ModuleName, 7, "invalid opponent address")
 	ErrDuplicatedIndex    = errors.Register(ModuleName, 8, "duplicated index")
+	ErrInvalidMove        = errors.Register(ModuleName, 9, "invalid move")
+	ErrGameEnded          = errors.Register(ModuleName, 10, "game ended")
+	ErrInvalidPlayer      = errors.Register(ModuleName, 11, "invalid player")
+	ErrPlayerCantMakeMove = errors.Register(ModuleName, 12, "player can't make move")
 )

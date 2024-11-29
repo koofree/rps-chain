@@ -1,0 +1,31 @@
+# docs.tendermint.com/master/rpc/
+
+# Get the latest block height
+GET {{cometBFTUrl}}/block?height=1 HTTP/1.1
+Content-Type: application/json
+
+### 
+# Get the latest block hash
+GET {{cometBFTUrl}}/block?hash=1 HTTP/1.1
+Content-Type: application/json
+
+###
+# Health
+GET {{cometBFTUrl}}/health HTTP/1.1
+Content-Type: application/json
+
+###
+# Status
+GET {{cometBFTUrl}}/status HTTP/1.1
+Content-Type: application/json
+
+###
+# block result
+GET {{cometBFTUrl}}/block_results?height=1 HTTP/1.1
+Content-Type: application/json
+
+###
+# tx status
+GET {{cometBFTUrl}}/tx?hash=0x3D2D4E852F6AB0102AB85E3CD80CD2CE120CBCBB890E5F0D4700232439B8C472 HTTP/1.1
+Content-Type: application/json
+
