@@ -139,7 +139,7 @@ func (ms msgServer) UpdateParams(ctx context.Context, msg *types.MsgUpdateParams
 	}
 
 	if authority := ms.k.GetAuthority(); !strings.EqualFold(authority, msg.Authority) {
-		return nil, fmt.Errorf("unauthorized. authority does not match the module's authority: got %s, want %s")
+		return nil, fmt.Errorf("unauthorized. authority does not match the module's authority: got %s, want %s", authority, msg.Authority)
 	}
 
 	if err := msg.Params.Validate(); err != nil {
