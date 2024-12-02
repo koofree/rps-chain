@@ -159,6 +159,7 @@ func NewRPSApp(
 	}
 
 	/****  Module Options ****/
+	app.RegisterUpgradeHandlers()
 
 	// create the simulation manager and define the order of the modules for deterministic simulations
 	// NOTE: this is not required apps that don't use the simulator for fuzz testing transactions
