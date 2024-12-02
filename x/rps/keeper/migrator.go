@@ -20,8 +20,14 @@ func NewMigrator(k Keeper) Migrator {
 // Migrate1to2 migrates the rps module from v1 to v2.
 func (m Migrator) Migrate1to2(ctx sdk.Context) error {
 	// migrate games - add the expiration height for existing games
+	logger := ctx.Logger().With("upgrade", "v2")
+	logger.Debug("Migrate1to2... starting")
+
 	sdkCtx := sdk.UnwrapSDKContext(ctx)
 	if err := m.keeper.Games.Walk(sdkCtx, nil, func(id uint64, game types.Game) (stop bool, err error) {
+		logger := ctx.Logger().With("upgrade", "v2")
+		logger.Debug("Migrate1to2... gameNumber is %d", game.GameNumber)
+
 		mg := v2.MigrateGame(sdkCtx, game)
 		if err := m.keeper.Games.Set(sdkCtx, id, mg); err != nil {
 			return true, err
