@@ -14,7 +14,9 @@ type Migrator struct {
 
 // NewMigrator returns a new Migrator for the state migration.
 func NewMigrator(k Keeper) Migrator {
-	return Migrator{keeper: k}
+	return Migrator{
+		keeper: k,
+	}
 }
 
 // Migrate1to2 migrates the rps module from v1 to v2.
@@ -23,17 +25,16 @@ func (m Migrator) Migrate1to2(ctx sdk.Context) error {
 	logger := ctx.Logger().With("upgrade", "v2")
 	logger.Debug("Migrate1to2... starting")
 
-	sdkCtx := sdk.UnwrapSDKContext(ctx)
-	if err := m.keeper.Games.Walk(sdkCtx, nil, func(id uint64, game types.Game) (stop bool, err error) {
+	if err := m.keeper.Games.Walk(ctx, nil, func(id uint64, game types.Game) (stop bool, err error) {
 		logger := ctx.Logger().With("upgrade", "v2")
 		logger.Debug("Migrate1to2... gameNumber is %d", game.GameNumber)
 
-		mg := v2.MigrateGame(sdkCtx, game)
-		if err := m.keeper.Games.Set(sdkCtx, id, mg); err != nil {
+		mg := v2.MigrateGame(ctx, game)
+		if err := m.keeper.Games.Set(ctx, id, mg); err != nil {
 			return true, err
 		}
 		// add these to the active game list
-		if err := m.keeper.ActiveGamesQueue.Set(sdkCtx, collections.Join(mg.ExpirationHeight, id)); err != nil {
+		if err := m.keeper.ActiveGamesQueue.Set(ctx, collections.Join(mg.ExpirationHeight, id)); err != nil {
 			return true, err
 		}
 
@@ -42,5 +43,5 @@ func (m Migrator) Migrate1to2(ctx sdk.Context) error {
 		return err
 	}
 
-	return m.keeper.Params.Set(sdkCtx, types.DefaultParams())
+	return m.keeper.Params.Set(ctx, types.DefaultParams())
 }

@@ -2,6 +2,7 @@ package v2
 
 import (
 	"context"
+	"fmt"
 
 	upgradetypes "cosmossdk.io/x/upgrade/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -17,7 +18,7 @@ func CreateUpgradeHandler(
 		ctx := sdk.UnwrapSDKContext(c)
 
 		logger := ctx.Logger().With("upgrade", UpgradeName)
-		logger.Debug("running module migrations...")
+		logger.Debug(fmt.Sprintf("running module migrations... %v", vm))
 
 		return mm.RunMigrations(ctx, cfg, vm)
 	}
