@@ -49,6 +49,17 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 						{ProtoField: "move"},
 					},
 				},
+				{
+					RpcMethod: "RevealMove",
+					Use:       "reveal-move game-index move salt",
+					Short:     "Reveals a move in the game",
+					Long:      "Reveals a move in the game. Input parameters are the game index, the revealed move and the salt",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{
+						{ProtoField: "game_index"},
+						{ProtoField: "revealed_move"},
+						{ProtoField: "salt"},
+					},
+				},
 			},
 		},
 	}

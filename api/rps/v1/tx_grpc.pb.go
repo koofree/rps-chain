@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	Msg_CreateGame_FullMethodName   = "/lb.rps.v1.Msg/CreateGame"
 	Msg_MakeMove_FullMethodName     = "/lb.rps.v1.Msg/MakeMove"
+	Msg_RevealMove_FullMethodName   = "/lb.rps.v1.Msg/RevealMove"
 	Msg_UpdateParams_FullMethodName = "/lb.rps.v1.Msg/UpdateParams"
 )
 
@@ -32,6 +33,8 @@ type MsgClient interface {
 	CreateGame(ctx context.Context, in *MsgCreateGame, opts ...grpc.CallOption) (*MsgCreateGameResponse, error)
 	// MakeMove
 	MakeMove(ctx context.Context, in *MsgMakeMove, opts ...grpc.CallOption) (*MsgMakeMoveResponse, error)
+	// RevealMove
+	RevealMove(ctx context.Context, in *MsgRevealMove, opts ...grpc.CallOption) (*MsgRevealMoveResponse, error)
 	// UpdateParams
 	UpdateParams(ctx context.Context, in *MsgUpdateParams, opts ...grpc.CallOption) (*MsgUpdateParamsResponse, error)
 }
@@ -62,6 +65,15 @@ func (c *msgClient) MakeMove(ctx context.Context, in *MsgMakeMove, opts ...grpc.
 	return out, nil
 }
 
+func (c *msgClient) RevealMove(ctx context.Context, in *MsgRevealMove, opts ...grpc.CallOption) (*MsgRevealMoveResponse, error) {
+	out := new(MsgRevealMoveResponse)
+	err := c.cc.Invoke(ctx, Msg_RevealMove_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *msgClient) UpdateParams(ctx context.Context, in *MsgUpdateParams, opts ...grpc.CallOption) (*MsgUpdateParamsResponse, error) {
 	out := new(MsgUpdateParamsResponse)
 	err := c.cc.Invoke(ctx, Msg_UpdateParams_FullMethodName, in, out, opts...)
@@ -79,6 +91,8 @@ type MsgServer interface {
 	CreateGame(context.Context, *MsgCreateGame) (*MsgCreateGameResponse, error)
 	// MakeMove
 	MakeMove(context.Context, *MsgMakeMove) (*MsgMakeMoveResponse, error)
+	// RevealMove
+	RevealMove(context.Context, *MsgRevealMove) (*MsgRevealMoveResponse, error)
 	// UpdateParams
 	UpdateParams(context.Context, *MsgUpdateParams) (*MsgUpdateParamsResponse, error)
 	mustEmbedUnimplementedMsgServer()
@@ -93,6 +107,9 @@ func (UnimplementedMsgServer) CreateGame(context.Context, *MsgCreateGame) (*MsgC
 }
 func (UnimplementedMsgServer) MakeMove(context.Context, *MsgMakeMove) (*MsgMakeMoveResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MakeMove not implemented")
+}
+func (UnimplementedMsgServer) RevealMove(context.Context, *MsgRevealMove) (*MsgRevealMoveResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RevealMove not implemented")
 }
 func (UnimplementedMsgServer) UpdateParams(context.Context, *MsgUpdateParams) (*MsgUpdateParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateParams not implemented")
@@ -146,6 +163,24 @@ func _Msg_MakeMove_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_RevealMove_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgRevealMove)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).RevealMove(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_RevealMove_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).RevealMove(ctx, req.(*MsgRevealMove))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Msg_UpdateParams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(MsgUpdateParams)
 	if err := dec(in); err != nil {
@@ -178,6 +213,10 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "MakeMove",
 			Handler:    _Msg_MakeMove_Handler,
+		},
+		{
+			MethodName: "RevealMove",
+			Handler:    _Msg_RevealMove_Handler,
 		},
 		{
 			MethodName: "UpdateParams",

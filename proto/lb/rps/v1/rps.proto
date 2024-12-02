@@ -6,7 +6,10 @@ option go_package = "github.com/0xlb/rpschain/x/rps/types";
 import "cosmos_proto/cosmos.proto";
 
 // Params defines the parameters of the module.
-message Params {}
+message Params {
+  // ttl (uint64): life of a game in blocks count
+  uint64 ttl = 1;
+}
 
 // Game
 message Game {
@@ -26,4 +29,6 @@ message Game {
   repeated string player_b_moves = 7;
   // score
   repeated uint64 score = 8;
+  // expiration height
+  uint64 expiration_height = 9;
 }

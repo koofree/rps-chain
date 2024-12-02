@@ -25,6 +25,16 @@ message EventMakeMove {
   string move = 3;
 }
 
+// EventRevealMove
+message EventRevealMove {
+  // game_number
+  uint64 game_number = 1;
+  // player
+  string player = 2 [ (cosmos_proto.scalar) = "cosmos.AddressString" ];
+  // revealed_move
+  string revealed_move = 3;
+}
+
 // EventEndGame
 message EventEndGame {
   // game_number

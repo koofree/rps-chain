@@ -15,6 +15,8 @@ service Msg {
   rpc CreateGame(MsgCreateGame) returns (MsgCreateGameResponse);
   // MakeMove
   rpc MakeMove(MsgMakeMove) returns (MsgMakeMoveResponse);
+  // RevealMove
+  rpc RevealMove(MsgRevealMove) returns (MsgRevealMoveResponse);
   // UpdateParams
   rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
 }
@@ -42,6 +44,19 @@ message MsgMakeMove {
 
 // MsgMakeMoveResponse
 message MsgMakeMoveResponse {}
+
+// MsgRevealMove
+message MsgRevealMove {
+  option (cosmos.msg.v1.signer) = "player";
+
+  string player = 1;
+  uint64 game_index = 2;
+  string revealed_move = 3;
+  string salt = 4;
+}
+
+// MsgRevealMoveResponse
+message MsgRevealMoveResponse {}
 
 // MsgUpdateParams
 message MsgUpdateParams {
